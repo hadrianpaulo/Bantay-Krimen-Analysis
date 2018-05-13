@@ -7,22 +7,22 @@ import os
 import pandas as pd
 
 @click.command()
-@click.argument('input_filepath', type=click.Path(exists=True))
-@click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+def main():
     """ Runs data processing scripts to turn raw data from (../raw) into
         cleaned data ready to be analyzed (saved in ../processed).
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
     files = os.listdir('data/raw')
+    files.remove('.gitkeep')
     df = pd.DataFrame()
     for f in files:
-        df = df.append(pd.read_json(f'../data/raw/{f}'))
+        df = df.append(pd.read_json(f'data/raw/{f}'))
     df['region'] = [x[-1] for x in df.location.str.split(', ').tolist()]
     df['province'] = [x[-2] for x in df.location.str.split(', ').tolist()]
     df.date = pd.to_datetime(df.date)
     df['hour'] = pd.to_datetime(df['time'], format='%H:%M:%S').dt.hour
+    df.to_csv('data/processed/crime_incidences.csv', index=False)
 
 
 if __name__ == '__main__':
