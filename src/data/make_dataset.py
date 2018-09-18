@@ -13,11 +13,11 @@ def main():
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
-    files = os.listdir('data/raw')
-    files.remove('.gitkeep')
+    files = os.listdir('data/raw/060718')
+#    files.remove('.gitkeep')
     df = pd.DataFrame()
     for f in files:
-        df = df.append(pd.read_json(f'data/raw/{f}'))
+        df = df.append(pd.read_json(f'data/raw/060718/{f}'))
     df['region'] = [x[-1] for x in df.location.str.split(', ').tolist()]
     df['province'] = [x[-2] for x in df.location.str.split(', ').tolist()]
     df.date = pd.to_datetime(df.date)
