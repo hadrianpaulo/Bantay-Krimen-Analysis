@@ -252,7 +252,7 @@ Twisted==18.7.0
 typing==3.6.4
 unicodecsv==0.14.1
 Unidecode==1.0.22
-urllib3==1.23
+urllib3==1.26.5
 vine==1.1.4
 virtualenv==16.0.0
 virtualenv-clone==0.3.0
